@@ -175,7 +175,7 @@ public class CameraActivity extends AppCompatActivity {
                         cur_orientation = -floatOrientation[0];
                         first_orientation = cur_orientation;
                     }else{
-                        if(-floatOrientation[0] > cur_orientation+0.2){
+                        if(-floatOrientation[0] > cur_orientation+0.1){
                             CaptureImage(view);
                             cur_orientation = -floatOrientation[0];
 
@@ -193,7 +193,7 @@ public class CameraActivity extends AppCompatActivity {
                                 imageView.setVisibility(View.VISIBLE);
                             }
                         }
-                        if(-floatOrientation[0] > first_orientation && count > 20){
+                        if(-floatOrientation[0] > first_orientation && count > 25){
                             Flag = 0;
                             count = 0;
                             button.setText("shot");
