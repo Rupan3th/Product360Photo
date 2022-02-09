@@ -56,6 +56,7 @@ public class CameraActivity extends AppCompatActivity {
     private int Flag = 0;
     private int count = 0;
     private float cur_orientation;
+    private float first_orientation;
     private ImageCapture imageCapture;
     private View view;
 
@@ -172,6 +173,7 @@ public class CameraActivity extends AppCompatActivity {
                     if(count < 1){
                         CaptureImage(view);
                         cur_orientation = -floatOrientation[0];
+                        first_orientation = cur_orientation;
                     }else{
                         if(-floatOrientation[0] > cur_orientation+0.2){
                             CaptureImage(view);
@@ -190,26 +192,33 @@ public class CameraActivity extends AppCompatActivity {
                                 state.setTextColor(Color.parseColor("#ff0303"));
                                 imageView.setVisibility(View.VISIBLE);
                             }
-
+                        }
+                        if(-floatOrientation[0] > first_orientation && count > 20){
+                            Flag = 0;
+                            count = 0;
+                            button.setText("shot");
+                            button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FDFFFF")));
+                            state.setText( "");
+                            imageView.setVisibility(View.INVISIBLE);
                         }
                     }
 
                 }
 
-                if(Flag == 0){
-                    if((-floatOrientation[0]) > cur_orientation+0.1){
-                        cur_orientation = -floatOrientation[0];
-                        state.setText( "Continue");
-                        state.setTextColor(Color.parseColor("#03ff31"));
-                        imageView.setVisibility(View.INVISIBLE);
-                    }
-                    if((-floatOrientation[0]) < cur_orientation-0.1){
-                        cur_orientation = -floatOrientation[0];
-                        state.setText( "Wrong direction");
-                        state.setTextColor(Color.parseColor("#ff0303"));
-                        imageView.setVisibility(View.VISIBLE);
-                    }
-                }
+//                if(Flag == 0){
+//                    if((-floatOrientation[0]) > cur_orientation+0.1){
+//                        cur_orientation = -floatOrientation[0];
+//                        state.setText( "Continue");
+//                        state.setTextColor(Color.parseColor("#03ff31"));
+//                        imageView.setVisibility(View.INVISIBLE);
+//                    }
+//                    if((-floatOrientation[0]) < cur_orientation-0.1){
+//                        cur_orientation = -floatOrientation[0];
+//                        state.setText( "Wrong direction");
+//                        state.setTextColor(Color.parseColor("#ff0303"));
+//                        imageView.setVisibility(View.VISIBLE);
+//                    }
+//                }
 
             }
 
@@ -287,6 +296,8 @@ public class CameraActivity extends AppCompatActivity {
             count = 0;
             button.setText("shot");
             button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FDFFFF")));
+            state.setText( "");
+            imageView.setVisibility(View.INVISIBLE);
         }
     }
 

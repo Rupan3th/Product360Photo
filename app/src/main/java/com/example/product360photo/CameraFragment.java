@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 public class CameraFragment extends Fragment {
     private View view;
     private LinearLayout product_Scene;
+    private LinearLayout vehicle_Scene;
+    private LinearLayout panorama_Scene;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -67,8 +69,27 @@ public class CameraFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_camera, container, false);
         product_Scene = (LinearLayout) view.findViewById(R.id.product_scene);
-
         product_Scene.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),CameraActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
+
+        vehicle_Scene = (LinearLayout) view.findViewById(R.id.vehicle_scene);
+        vehicle_Scene.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),CameraActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
+
+        panorama_Scene = (LinearLayout) view.findViewById(R.id.panorama_scene);
+        panorama_Scene.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),CameraActivity.class);

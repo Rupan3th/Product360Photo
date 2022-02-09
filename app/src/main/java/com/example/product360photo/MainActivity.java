@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -30,10 +33,13 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-//        ActionBar actionBar;
-//        actionBar = getSupportActionBar();
+        String title = "360 Product Photo";
+        SpannableString s = new SpannableString(title);
+        s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ActionBar actionBar = getSupportActionBar();
 //        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#4E68F4"));
 //        actionBar.setBackgroundDrawable(colorDrawable);
+        actionBar.setTitle(s);
 
         init(); //object define
         SettingListener(); //Listener regist
