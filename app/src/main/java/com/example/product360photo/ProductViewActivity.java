@@ -44,13 +44,12 @@ public class ProductViewActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        try{
-            Glide.get(this).clearDiskCache();
-            Glide.get(this).clearMemory();
-        }catch (Exception e) {
-
-        }
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Glide.get(ProductViewActivity.this).clearDiskCache();
+            }
+        }).start();
 //        Glide.get(this).clearMemory();
 
         ImageView btnBack = (ImageView) findViewById(R.id.back_btn);
@@ -190,7 +189,7 @@ public class ProductViewActivity extends AppCompatActivity {
                 }
             }
         };
-        future = scheduler.scheduleAtFixedRate(r, 0, 100, TimeUnit.MILLISECONDS);
+        future = scheduler.scheduleAtFixedRate(r, 0, 200, TimeUnit.MILLISECONDS);
     }
 
     private void createListAssetsImage() {
