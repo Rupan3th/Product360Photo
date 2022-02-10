@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Presentation;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -78,7 +79,7 @@ public class CameraActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_user);
+//        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_user);
 
         imageView = findViewById(R.id.imageView);
         angles = findViewById(R.id.angles);
@@ -89,9 +90,10 @@ public class CameraActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                gotoProductView();
             }
         });
+
 
         if (checkPermission()) {
             cameraProviderFuture = ProcessCameraProvider.getInstance(this);
@@ -330,6 +332,12 @@ public class CameraActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void gotoProductView(){
+        Intent intent = new Intent(this, ProductViewActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
