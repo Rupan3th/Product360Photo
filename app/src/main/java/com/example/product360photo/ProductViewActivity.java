@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,6 +35,9 @@ public class ProductViewActivity extends AppCompatActivity {
 
     private ScheduledFuture<?> future;
 
+    private String imageFolder="";
+    private String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,9 @@ public class ProductViewActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Intent intent = getIntent();
+        imageFolder = intent.getStringExtra("ImageFolder");
 
         new Thread(new Runnable() {
             @Override
@@ -163,7 +168,6 @@ public class ProductViewActivity extends AppCompatActivity {
     }
 
     private void coroutinesStartFunction() {
-//        Glide.get(this).clearDiskCache();
         playImageLikeGif();
 
     }
@@ -195,12 +199,12 @@ public class ProductViewActivity extends AppCompatActivity {
     private void createListAssetsImage() {
         arrayListPictureAssets.clear();
 
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo";
-        File dir = new File(path);
-        File[] files = dir.listFiles();
-
-        for (int i = 0; i < files.length; i++) {
-            arrayListPictureAssets.add(path + "/" + files[i].getName());
+        String saved_path = path + imageFolder;
+        File dir = new File(saved_path);
+        if(dir.exists()){
+            for (int i = 0; i < dir.listFiles().length; i++) {
+                arrayListPictureAssets.add(saved_path + "/" + dir.listFiles()[i].getName());
+            }
         }
 
         //        arrayListPictureAssets.add("file:///android_asset/AVF_2696.jpg");

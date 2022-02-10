@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.app.Presentation;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -27,7 +26,6 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -38,12 +36,14 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class CameraActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
+//    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
@@ -51,7 +51,6 @@ public class CameraActivity extends AppCompatActivity {
     private TextView angles;
     private TextView state;
     private Button button;
-    private ImageView btnBack;
     private PreviewView previewView;
     private Executor executor;
     private int Flag = 0;
@@ -61,15 +60,14 @@ public class CameraActivity extends AppCompatActivity {
     private ImageCapture imageCapture;
     private View view;
 
-    private SensorManager sensorManager;
-    private Sensor sensorAccelerometer;
-    private Sensor sensorMagneticField;
-
     private float[] floatGravity = new float[3];
     private float[] floatGeoMagnetic = new float[3];
 
     private float[] floatOrientation = new float[3];
     private float[] floatRotationMatrix = new float[9];
+
+    private String imageFolder="";
+    private String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +82,14 @@ public class CameraActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         angles = findViewById(R.id.angles);
         state = findViewById(R.id.state);
-        previewView = (PreviewView) findViewById(R.id.previewView);
-        button = (Button) findViewById(R.id.button);
-        btnBack = (ImageView) findViewById(R.id.back_btn);
+        previewView = findViewById(R.id.previewView);
+        button = findViewById(R.id.button);
+        ImageView btnBack = findViewById(R.id.back_btn);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoProductView();
+                if(imageFolder.equals(""))   gotoHome();
+                else gotoProductView();
             }
         });
 
@@ -112,9 +111,9 @@ public class CameraActivity extends AppCompatActivity {
             requestPermission();
         }
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Sensor sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         SensorEventListener sensorEventListenerAccelrometer = new SensorEventListener() {
             @Override
@@ -169,7 +168,7 @@ public class CameraActivity extends AppCompatActivity {
                 SensorManager.getOrientation(floatRotationMatrix, floatOrientation);
 
 //                imageView.setRotation((float) (-floatOrientation[0]*180/3.14159));
-                angles.setText( String.valueOf((float) (-floatOrientation[0])));
+                angles.setText( String.valueOf(-floatOrientation[0]));
 
                 if(Flag == 1){
                     if(count < 1){
@@ -181,7 +180,7 @@ public class CameraActivity extends AppCompatActivity {
                             CaptureImage(view);
                             cur_orientation = -floatOrientation[0];
 
-                            state.setText( "Continue");
+                            state.setText(R.string.state_continue);
                             state.setTextColor(Color.parseColor("#03ff31"));
                             imageView.setVisibility(View.INVISIBLE);
                         }else {
@@ -190,7 +189,7 @@ public class CameraActivity extends AppCompatActivity {
                                 cur_orientation = -floatOrientation[0];
                             }
                             if((-floatOrientation[0]) < cur_orientation-0.1){
-                                state.setText( "Wrong direction");
+                                state.setText(R.string.state_wrong);
                                 state.setTextColor(Color.parseColor("#ff0303"));
                                 imageView.setVisibility(View.VISIBLE);
                             }
@@ -198,7 +197,7 @@ public class CameraActivity extends AppCompatActivity {
                         if(-floatOrientation[0] > first_orientation && count > 25){
                             Flag = 0;
                             count = 0;
-                            button.setText("shot");
+                            button.setText(R.string.camera_btn_rec);
                             button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FDFFFF")));
                             state.setText( "");
                             imageView.setVisibility(View.INVISIBLE);
@@ -240,7 +239,6 @@ public class CameraActivity extends AppCompatActivity {
             // Permission is not granted
             return false;
         }
-
         return true;
     }
 
@@ -280,8 +278,7 @@ public class CameraActivity extends AppCompatActivity {
 //            }
 //        });
 
-        imageCapture =
-                new ImageCapture.Builder()
+        imageCapture = new ImageCapture.Builder()
                         .build();
 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageCapture, imageAnalysis, preview);
@@ -290,13 +287,20 @@ public class CameraActivity extends AppCompatActivity {
     public void cameraStart(View view){
         if(Flag == 0) {
             Flag = 1;
-            button.setText("stop");
+            button.setText(R.string.camera_btn_stop);
             button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFD0303")));
+
+            imageFolder = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            path = this.path + imageFolder;
+            File saveFile = new File(path);
+            if(!saveFile.exists()){
+                saveFile.mkdir();
+            }
         }
         else {
             Flag = 0;
             count = 0;
-            button.setText("shot");
+            button.setText(R.string.camera_btn_rec);
             button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FDFFFF")));
             state.setText( "");
             imageView.setVisibility(View.INVISIBLE);
@@ -307,17 +311,13 @@ public class CameraActivity extends AppCompatActivity {
 //        imageView.setRotation(180);
         count++;
 
-        File saveFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo");
-        if(!saveFile.exists()){
-            saveFile.mkdir();
-        }
         String product_photo = "";
         if(count < 10) product_photo = "product_0"+count+".jpg";
         else product_photo = "product_"+count+".jpg";
 
         ImageCapture.OutputFileOptions outputFileOptions =
                 new ImageCapture.OutputFileOptions.Builder(
-                        new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo", product_photo))
+                        new File(path, product_photo))
                         .build();
 
         imageCapture.takePicture(outputFileOptions, executor,
@@ -336,6 +336,13 @@ public class CameraActivity extends AppCompatActivity {
 
     private void gotoProductView(){
         Intent intent = new Intent(this, ProductViewActivity.class);
+        intent.putExtra("ImageFolder", imageFolder);
+        startActivity(intent);
+        finish();
+    }
+
+    private void gotoHome(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

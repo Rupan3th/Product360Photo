@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -17,6 +18,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
 //        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#4E68F4"));
 //        actionBar.setBackgroundDrawable(colorDrawable);
         actionBar.setTitle(s);
+
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo";
+        File dir = new File(path);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
 
         init(); //object define
         SettingListener(); //Listener regist
