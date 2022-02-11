@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.ActionBar.Transparent">
+        android:theme="@style/AppTheme.ActionBar.Transparent"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".ProductViewActivity"
             android:exported="false"
