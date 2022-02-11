@@ -1,6 +1,8 @@
 package com.example.product360photo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -130,7 +132,8 @@ public class HomeFragment extends Fragment {
         File dir = new File(path);
         if(dir.exists()){
             for (int i = 0; i < dir.listFiles().length; i++) {
-                courseModelArrayList.add(new CourseModel(dir.listFiles()[i].getName(), R.drawable.ic_home));
+                Bitmap bitmap = BitmapFactory.decodeFile(path + "/" + dir.listFiles()[i].getName() + "/product_01.jpg");
+                courseModelArrayList.add(new CourseModel(dir.listFiles()[i].getName(), bitmap));
 
             }
         }

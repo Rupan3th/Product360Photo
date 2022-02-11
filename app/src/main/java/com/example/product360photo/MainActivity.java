@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         home_ly = findViewById(R.id.home_ly);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.home_ly, new HomeFragment())
+                .commit();
     }
 
     private void SettingListener() {
