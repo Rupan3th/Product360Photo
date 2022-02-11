@@ -16,10 +16,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+
+import com.example.product360photo.Adapter.CourseGVAdapter;
+import com.example.product360photo.model.CourseModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
