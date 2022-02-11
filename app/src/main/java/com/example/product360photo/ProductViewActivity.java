@@ -36,7 +36,7 @@ public class ProductViewActivity extends AppCompatActivity {
     private ScheduledFuture<?> future;
 
     private String imageFolder="";
-    private String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo/";
+    private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 //        actionBar.setBackgroundDrawable(colorDrawable);
         actionBar.setTitle(s);
 
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo";
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo";
         File dir = new File(path);
         if(!dir.exists()){
             dir.mkdir();

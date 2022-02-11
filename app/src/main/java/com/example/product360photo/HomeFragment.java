@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<CourseModel> courseModelArrayList = new ArrayList<CourseModel>();
     private CourseGVAdapter adapter;
 
-    private String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo/";
+    private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo/";
 
     public HomeFragment() {
         // Required empty public constructor

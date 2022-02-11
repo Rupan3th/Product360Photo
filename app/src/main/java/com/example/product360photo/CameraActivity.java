@@ -67,7 +67,7 @@ public class CameraActivity extends AppCompatActivity {
     private float[] floatRotationMatrix = new float[9];
 
     private String imageFolder="";
-    private String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo/";
+    private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
