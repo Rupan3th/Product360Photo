@@ -290,7 +290,7 @@ public class CameraActivity extends AppCompatActivity {
             button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFD0303")));
 
             imageFolder = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            String path = GlobalConst.home_path + File.separator + imageFolder;
+            path = GlobalConst.home_path + File.separator + imageFolder;
             File saveFile = new File(path);
             if(!saveFile.exists()){
                 saveFile.mkdir();
