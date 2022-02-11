@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.GridView;
 import com.example.product360photo.Adapter.CourseGVAdapter;
 import com.example.product360photo.model.CourseModel;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +38,8 @@ public class HomeFragment extends Fragment {
     private GridView coursesGV;
     private ArrayList<CourseModel> courseModelArrayList = new ArrayList<CourseModel>();
     private CourseGVAdapter adapter;
+
+    private String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/360_photo/";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -98,25 +102,38 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         coursesGV = view.findViewById(R.id.idGV_courses);
 
-        courseModelArrayList.add(new CourseModel("DSA", R.drawable.ic_home));
-        courseModelArrayList.add(new CourseModel("JAVA", R.drawable.ic_home));
-        courseModelArrayList.add(new CourseModel("C++", R.drawable.ic_home));
-        courseModelArrayList.add(new CourseModel("Python", R.drawable.ic_home));
-        courseModelArrayList.add(new CourseModel("Javascript", R.drawable.ic_home));
-        courseModelArrayList.add(new CourseModel("DSA", R.drawable.ic_home));
+        CreateModelArrayList();
+
+//        courseModelArrayList.add(new CourseModel("DSA", R.drawable.ic_home));
+//        courseModelArrayList.add(new CourseModel("JAVA", R.drawable.ic_home));
+//        courseModelArrayList.add(new CourseModel("C++", R.drawable.ic_home));
+//        courseModelArrayList.add(new CourseModel("Python", R.drawable.ic_home));
+//        courseModelArrayList.add(new CourseModel("Javascript", R.drawable.ic_home));
+//        courseModelArrayList.add(new CourseModel("DSA", R.drawable.ic_home));
 
         if(mContext != null) {
             //your code that uses Context
             adapter = new CourseGVAdapter(mContext, courseModelArrayList);
+            coursesGV.setAdapter(adapter);
         }
 
-        coursesGV.setAdapter(adapter);
-
         return view;
+    }
+
+    private void CreateModelArrayList(){
+        courseModelArrayList.clear();
+
+        File dir = new File(path);
+        if(dir.exists()){
+            for (int i = 0; i < dir.listFiles().length; i++) {
+                courseModelArrayList.add(new CourseModel(dir.listFiles()[i].getName(), R.drawable.ic_home));
+
+            }
+        }
     }
 
 

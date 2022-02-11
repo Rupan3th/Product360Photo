@@ -248,7 +248,6 @@ public class ProductViewActivity extends AppCompatActivity {
     private void gotoHome(){
         scheduler.schedule(stopCommand, 0, TimeUnit.MILLISECONDS);
         scheduler.shutdownNow();
-        arrayListPictureAssets.clear();
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
