@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String itemFolder = ((TextView)view.findViewById(R.id.idTVCourse)).getText().toString();
 
-                    Intent intent = new Intent(getActivity(), ProductViewActivity.class);
+                    Intent intent = new Intent(getActivity(), Product360WebviewActivity.class);
                     intent.putExtra("ImageFolder", itemFolder);
                     startActivity(intent);
 
