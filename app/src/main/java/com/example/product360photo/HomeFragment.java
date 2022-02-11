@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
     private ArrayList<CourseModel> courseModelArrayList = new ArrayList<CourseModel>();
     private CourseGVAdapter adapter;
 
-    private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo/";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -143,13 +142,17 @@ public class HomeFragment extends Fragment {
     private void CreateModelArrayList(){
         courseModelArrayList.clear();
 
-        File dir = new File(path);
+        File dir = new File(GlobalConst.home_path);
         if(dir.exists()){
-            for (int i = 0; i < dir.listFiles().length; i++) {
-                Bitmap bitmap = BitmapFactory.decodeFile(path + "/" + dir.listFiles()[i].getName() + "/product_01.jpg");
-                courseModelArrayList.add(new CourseModel(dir.listFiles()[i].getName(), bitmap));
+            if(dir.listFiles() != null)
+            {
+                for (int i = 0; i < dir.listFiles().length; i++) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(GlobalConst.home_path + "/" + dir.listFiles()[i].getName() + "/product_01.jpg");
+                    courseModelArrayList.add(new CourseModel(dir.listFiles()[i].getName(), bitmap));
 
+                }
             }
+
         }
     }
 

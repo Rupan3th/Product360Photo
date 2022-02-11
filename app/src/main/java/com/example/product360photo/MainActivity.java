@@ -3,7 +3,9 @@ package com.example.product360photo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                201);
+
         String title = "360 Product Photo";
         SpannableString s = new SpannableString(title);
         s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -49,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //        actionBar.setBackgroundDrawable(colorDrawable);
         actionBar.setTitle(s);
 
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo";
-        File dir = new File(path);
+        File dir = new File(GlobalConst.home_path);
         if(!dir.exists()){
             dir.mkdir();
         }

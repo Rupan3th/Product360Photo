@@ -36,7 +36,6 @@ public class ProductViewActivity extends AppCompatActivity {
     private ScheduledFuture<?> future;
 
     private String imageFolder="";
-    private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +198,7 @@ public class ProductViewActivity extends AppCompatActivity {
     private void createListAssetsImage() {
         arrayListPictureAssets.clear();
 
-        String saved_path = path + imageFolder;
+        String saved_path = GlobalConst.home_path + File.separator + imageFolder;
         File dir = new File(saved_path);
         if(dir.exists()){
             for (int i = 0; i < dir.listFiles().length; i++) {

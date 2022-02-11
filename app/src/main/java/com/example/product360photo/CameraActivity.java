@@ -67,8 +67,7 @@ public class CameraActivity extends AppCompatActivity {
     private float[] floatRotationMatrix = new float[9];
 
     private String imageFolder="";
-    private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/360_photo/";
-
+    private String path = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -291,7 +290,7 @@ public class CameraActivity extends AppCompatActivity {
             button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFD0303")));
 
             imageFolder = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            path = this.path + imageFolder;
+            String path = GlobalConst.home_path + File.separator + imageFolder;
             File saveFile = new File(path);
             if(!saveFile.exists()){
                 saveFile.mkdir();
