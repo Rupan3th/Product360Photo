@@ -342,8 +342,8 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void gotoHome(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
         finish();
     }
 

@@ -37,4 +37,5 @@ public class CourseGVAdapter extends ArrayAdapter<CourseModel> {
         courseIV.setImageBitmap(courseModel.getImgid());
         return listitemView;
     }
+
 }

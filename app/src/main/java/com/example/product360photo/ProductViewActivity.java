@@ -249,8 +249,8 @@ public class ProductViewActivity extends AppCompatActivity {
         scheduler.schedule(stopCommand, 0, TimeUnit.MILLISECONDS);
         scheduler.shutdownNow();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
         finish();
     }
 

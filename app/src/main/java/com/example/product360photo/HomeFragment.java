@@ -1,6 +1,7 @@
 package com.example.product360photo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.product360photo.Adapter.CourseGVAdapter;
 import com.example.product360photo.model.CourseModel;
@@ -121,6 +124,17 @@ public class HomeFragment extends Fragment {
             //your code that uses Context
             adapter = new CourseGVAdapter(mContext, courseModelArrayList);
             coursesGV.setAdapter(adapter);
+            coursesGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String itemFolder = ((TextView)view.findViewById(R.id.idTVCourse)).getText().toString();
+
+                    Intent intent = new Intent(getActivity(), ProductViewActivity.class);
+                    intent.putExtra("ImageFolder", itemFolder);
+                    startActivity(intent);
+
+                }
+            });
         }
 
         return view;
