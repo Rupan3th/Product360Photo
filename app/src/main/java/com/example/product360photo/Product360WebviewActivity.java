@@ -36,10 +36,33 @@ public class Product360WebviewActivity extends AppCompatActivity {
                 String filepath = saved_path + "/" + dir.listFiles()[i].getName();
                 imagesTag360=imagesTag360+"<img src=\"file://"+ filepath + "\"/>" ;
             }
+
+            //Log.d("",imagesTag360);
+
+            String folder_url = saved_path + "/";
+            int img_cnt = dir.listFiles().length;
+            String data = "<head>" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "\n" +
+                    "<div\n" +
+                    "class=\"cloudimage-360\"\n" +
+                    "data-folder=\"file://" + folder_url +"\"\n" +
+                    "data-filename=\"product_{index}.jpg\"\n" +
+                    "data-amount=\""+ img_cnt +"\"\n" +
+                    "data-magnifier=\"3\"\n" +
+                    "data-spin-reverse\n" +
+                    "data-full-screen\n" +
+                    "></div>" +
+                    "\n" +
+                    "<script type=\"text/javascript\" src=\"file:///android_asset/js/jscloud360.js\"></script>\n" +
+                    "</body>";
+
+            wv.loadDataWithBaseURL("",
+                    data, "text/html", "UTF-8", null);
+
         }
-        Log.d("",imagesTag360);
-        wv.loadDataWithBaseURL("",
-                imagesTag360, "text/html", "UTF-8", null);
+
 
         ImageView btnBack = (ImageView) findViewById(R.id.back_btn);
         btnBack.setOnClickListener(new View.OnClickListener() {

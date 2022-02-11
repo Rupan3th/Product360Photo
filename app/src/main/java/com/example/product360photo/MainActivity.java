@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 201);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.INTERNET},
+                202);
 
         String title = "360 Product Photo";
         SpannableString s = new SpannableString(title);

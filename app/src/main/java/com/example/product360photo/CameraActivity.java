@@ -311,8 +311,9 @@ public class CameraActivity extends AppCompatActivity {
         count++;
 
         String product_photo = "";
-        if(count < 10) product_photo = "product_0"+count+".jpg";
-        else product_photo = "product_"+count+".jpg";
+        //if(count < 10) product_photo = "product_0"+count+".jpg";
+        //else
+        product_photo = "product_"+count+".jpg";
 
         ImageCapture.OutputFileOptions outputFileOptions =
                 new ImageCapture.OutputFileOptions.Builder(
