@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -101,9 +102,14 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 case R.id.tab_user: {
-                    getSupportFragmentManager().beginTransaction()
+                    /*getSupportFragmentManager().beginTransaction()
                             .replace(R.id.home_ly, new UserFragment())
-                            .commit();
+                            .commit();*/
+                    Intent intent = new Intent(MainActivity.this, YolotestActivity.class);
+
+                    startActivity(intent);
+
+
                     return true;
                 }
                 case R.id.tab_settings: {

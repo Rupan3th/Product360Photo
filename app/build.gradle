@@ -13,6 +13,27 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                arguments '-DANDROID_PLATFORM=android-24', '-DANDROID_STL=c++_static', '-DANDROID_STL=c++_shared'
+            }
+        }
+
+        ndk {
+            moduleName "WztNcnnJniLog" //编译后会生成 .so
+            ldLibs "log", "z", "m"
+            abiFilters "armeabi-v7a", "arm64-v8a"  // opencv库太大只留需要的
+        }
+    }
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs', 'libs']  // libs
+        }
     }
 
     buildTypes {
@@ -21,6 +42,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

@@ -37,6 +37,10 @@
             android:name=".Product360WebviewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".YolotestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
